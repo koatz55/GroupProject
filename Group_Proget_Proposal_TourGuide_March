@@ -1,0 +1,17 @@
+Group Project Proposal-Travel Guide Match
+Stack- Python-Flask
+Description: We will create a travel website where a person can match their travel itinerary with the right tour guide
+Group Duties:
+Moise- Setting up git hub link, Modulation of Project, Information Page
+David- Setting up SQL, Trip Itinerary Page, and Update Trip itinerary  
+Royshion- Creating the Tour Guide persons/people, Login/Registration, Compiling the Group Project Proposal
+Front-End styling- All are responsible
+Back-end-All are responsible
+Feature list:
+-A login/registration page
+-A information/Home Page
+-A page where user can put in their trip itinerary
+-A page where user can review trip itinerary submitted
+-A page where user can update/make changes trip itinerary
+- A page where tour guide is matched with the trip itinerary submitted by the user
+Github link: https://github.com/koatz55/GroupProject.git
