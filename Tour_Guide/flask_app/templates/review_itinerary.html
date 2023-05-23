@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    <style>
+        .header-container{
+            /* border: solid black 1px; */
+            display: flex;
+            margin-top: 15px;
+        }
+        h1{
+            /* border: solid black 1px; */
+            width: 310px;
+            justify-content: center;
+            padding-left: 65px;
+            margin: auto;
+            margin-bottom: 25px;
+        }
+        .form-container {
+            border: solid black 1px;
+            width: 350px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: gray;
+        }
+        form{
+            border: solid black 1px;
+            background-color: white;
+            margin: auto;
+            height: 500px;
+        }
+        label{
+            text-decoration: underline;
+        }
+        label, p {
+            margin-left: 10px;
+        }
+        .links{
+            /* border: solid black 1px; */
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>Reviewing Itinerary</h1>
+        <div>
+            <a href="/home", method = "POST">Home</a> 
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="form-container">
+        <form method = "POST">
+            <div>
+                <div>
+                    <div>
+                        <label for="first_name">First Name: </label> 
+                        <p>{{itinerary.first_name}}</p>
+                    </div>
+                    <div>
+                        <label for="last_name">Last Name: </label> 
+                        <p>{{itinerary.last_name}}</p>
+                    </div>
+                    <div>
+                        <label for="city">City:</label>
+                        <p>{{itinerary.city}}</p>
+                    </div>
+                </div>
+                    <div>
+                        <label for="trip_details">Trip Details:</label>
+                        <p>{{itinerary.trip_details}}</p>
+                    </div>
+            </div>
+            <div class="links">
+                {% for i in output %} 
+                    <a href="/edit/itinerary/{{i.id}}">Edit</a> | <a href="/delete/{{i.id}}">Delete</a> 
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</body>
+</html>

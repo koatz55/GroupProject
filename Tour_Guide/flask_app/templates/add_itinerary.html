@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    <style>
+        .header-container{
+            /* border: solid black 1px; */
+            display: flex;
+            margin-top: 15px;
+        }
+        h1{
+            /* border: solid black 1px; */
+            width: 310px;
+            justify-content: center;
+            padding-left: 65px;
+            margin: auto;
+            margin-bottom: 25px;
+        }
+        .form-container {
+            border: solid black 1px;
+            width: 350px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: gray;
+        }
+        button{
+            box-shadow: 2px 2px;
+        }
+        input, textarea{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+            <h1>Create Your Itinerary!</h1>
+            <div>
+                <a href="/home">Back</a>
+                <a href="/logout">Logout</a>
+            </div>
+    </div>
+    <div class="form-container">
+        <form action="/save/new/itinerary", method = "POST"> 
+            {% with messages = get_flashed_messages() %} 
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div>
+                <label for="first_name">First Name:</label><br/> 
+                <input type="text" name="first_name" required>
+            </div>
+            <div>
+                <label for="last_name">Last Name:</label><br/>
+                <input type="text" name="last_name" required> 
+            </div>
+            <div>
+                <label for="city">City:</label><br/>
+                <input type="text" name="city" required> 
+            </div>
+            <div>
+                <label for="trip_details">Trip Details:</label><br/>
+                <textarea name="trip_details" id="" cols="30" rows="10"></textarea>
+            </div>
+            <input type="hidden" name="user_id" value="{{current_user.id}}">
+            <div>
+                <input type="submit" value="Create" class="subBtn"> 
+            </div>
+        </form>
+    </div>
+</body>
+</html>
