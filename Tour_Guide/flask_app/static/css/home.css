@@ -1,0 +1,23 @@
+*{
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.title{
+    color: pink;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    size: 10em;
+    align-items: center;
+    text-align: center;
+}
+
+.nav{
+    background-color: aliceblue;
+}
+
+body {
+    background-image: url("/static/images/best-tropical-vacations-st-barts.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed ;
+    background-size: cover;
+}
