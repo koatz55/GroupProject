@@ -10,6 +10,10 @@ bcrypt = Bcrypt(app)
 def index():
     return render_template('index.html') 
 
+@app.route('/signup')
+def signup():
+    return render_template('register-login.html')
+
 @app.route('/register', methods=['post'])
 def register():
     print(request.form)

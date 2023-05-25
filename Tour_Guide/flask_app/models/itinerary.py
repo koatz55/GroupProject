@@ -12,8 +12,7 @@ class Itinerary:
         self.trip_details = data['trip_details'] 
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.creator = None
-
+        self.user_id = data['user_id']
     @staticmethod 
     def validate_create(request):
         is_valid = True 
@@ -63,16 +62,16 @@ class Itinerary:
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM itineraries LEFT JOIN users ON users.id = itineraries.user_id;"
+        query = "SELECT * FROM itineraries LEFT JOIN users ON itineraries.users_id = user.id;"
         results = connectToMySQL(mydb).query_db(query)
-        # print(results)
+        print(results)
         # recipes = []
         lst = []
         for i in results: 
             # this_recipe =cls(i)
             obj = cls(i)
             # this_recipe_creator = {
-            temp = { 
+            data = { 
                 'id':i['users.id'], # get  their id
                 'first_name':i['first_name'], # first name 
                 'last_name':i['last_name'], # last name
@@ -83,7 +82,7 @@ class Itinerary:
             }
             # this_recipe.creator= User(this_recipe_creator)
             # obj.creator= User(this_recipe_creator)
-            obj.creator= User(temp) #the creator is set to equal the temp for every user. so, if gisselle is a user so is also the creator 
+            obj.creator= User(data) #the creator is set to equal the temp for every user. so, if gisselle is a user so is also the creator 
             # recipes.append(this_recipe)
             lst.append(obj) # we add the user to out lst array
         # return recipes

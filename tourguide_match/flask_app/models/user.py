@@ -41,7 +41,7 @@ class User:
         elif len(request['password']) <8: 
             flash('Password Must Be At Least Eight Characters', 'regError')
             is_valid = False 
-        if len(request['passConf']) < 1: 
+        if len(request['confirm']) < 1: 
             flash('Please Confirm Your Password', 'regError')
             is_valid = False 
         elif request['password'] != request['passConf']: 
