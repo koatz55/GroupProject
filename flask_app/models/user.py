@@ -1,69 +1,83 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask import flash
-import re
-from flask_app.models import itinerary
-from flask_app.models import guide
+from flask import flash 
+import re 
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.+_-]+\.[a-zA-Z]+$') 
+mydb = 'tour_guide'  
 
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-
-class User:
-    DB = 'tour_guide'
-
-    def __init__( self, data ):
-        self.id = data['id']
-        self.first_name = data['first_name']
-        self.last_name = data['last_name']
+class User: 
+    def __init__(self,data): 
+        self.id = data['id'] 
+        self.first_name = data['first_name'] 
+        self.last_name = data['last_name'] 
         self.email = data['email']
-        self.password = data['password']
+        self.password = data['password'] 
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-
-
-    #Method inserts register user information into database
-    @classmethod
-    def save_regt_users(cls,data):
-        query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW(), NOW());"
-        return connectToMySQL(cls.DB).query_db(query,data)
-
-    #Method gets user from database by id 
-    @classmethod
-    def get_tour_users_id(cls,data):
-        query = "SELECT * FROM users WHERE id = %(id)s;"
-        result = connectToMySQL(cls.DB).query_db(query,data)
-        if result:
-            return cls(result[0])
-        return False
-
-    #Method gets user from database by email 
-    @classmethod
-    def get_tour_users_email(cls,data):
-        query = "SELECT * FROM users WHERE email = %(email)s;"
-        result = connectToMySQL(cls.DB).query_db(query,data)
-        if len(result) < 1:
-            return False
-        return cls(result[0])
-
-    #Method that validates user registration 
     @staticmethod
-    def validate_tour_users_reg(user):
+    def validate_create(request): 
         is_valid = True 
-        if len(user['first_name']) < 2:
-            flash("First Name must be at least 2 characters.")
-            is_valid = False
-        if len(user['email']) < 2:
-            flash("Email cannot be blank. At least 2 characters")
-            is_valid = False
-        elif not EMAIL_REGEX.match(user['email']):
-            flash("Invalid email address.")
-            is_valid = False
-        if len(user['last_name']) < 2:
-            flash("Last Name must be at least 2 characters.")
-            is_valid = False
-        if len(user['email']) < 2:
-            flash("Email must be at least 2 characters.")
+        if len(request['first_name']) < 1:
+            flash('Please Enter A First Name', 'regError') 
             is_valid = False 
-        if user['password'] != user['confirm_password']:
-            flash("Password does not match")
-            is_valid = False
+        elif len(request['first_name']) <2: 
+            flash('First Name Must Be At Least Two Characters', 'regError') 
+            is_valid = False 
+        if len(request['last_name']) < 1: 
+            flash('Please Enter A Last Name', 'regError') 
+            is_valid = False 
+        elif len(request['last_name']) <2: 
+            flash('Last Name Must Be At Least Two Characters', 'regError') 
+            is_valid = False 
+        if len(request['email']) < 1: 
+            flash('Please Enter An Email', 'regError') 
+            is_valid = False 
+        if not EMAIL_REGEX.match(request['email']): 
+            flash("Invalid email address!", 'regError')
+            is_valid = False 
+        if len(request['password']) < 1:
+            flash('Please Enter A Password', 'regError')
+            is_valid = False 
+        elif len(request['password']) <8: 
+            flash('Password Must Be At Least Eight Characters', 'regError')
+            is_valid = False 
+        if len(request['passConf']) < 1: 
+            flash('Please Confirm Your Password', 'regError')
+            is_valid = False 
+        elif request['password'] != request['passConf']: 
+            flash('Passwords Do Not Match', 'regError') 
+            is_valid = False 
+        print(f"is_valid: {is_valid}")
         return is_valid
+
+    @classmethod 
+    def save(cls,data): 
+        query = ''' 
+        INSERT INTO users
+        (first_name, last_name, email, password)
+        VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);''' 
+        results = connectToMySQL(mydb).query_db(query,data) 
+        print(f"results: {results}") 
+        return results 
+
+    @classmethod 
+    def getById(cls,data): 
+        print(data) 
+        query = '''
+        SELECT * FROM users
+        WHERE id = %(id)s;''' 
+        results = connectToMySQL(mydb).query_db(query,data) 
+        print(f"results: {results}") 
+        return cls(results[0]) 
+
+    @classmethod 
+    def getByEmail(cls,data):
+        print(data) 
+        query = '''
+        SELECT * FROM users
+        WHERE email = %(email)s;''' 
+        results = connectToMySQL(mydb).query_db(query,data)
+        print(f"results: {results}") 
+        if len(results) < 1: 
+            return False 
+        return cls(results[0])

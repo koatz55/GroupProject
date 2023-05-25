@@ -50,4 +50,3 @@ guide_proflile = [
     'tour_guide_descr': 'Macy Grey is a native tour guide from Kansas City, KS. He is knowlegable in all areas of the city'
     } 
 ]
-you
