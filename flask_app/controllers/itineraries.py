@@ -28,7 +28,7 @@ def view_recipe(post_id):
     output= itinerary.Itinerary.getById({'id': post_id})
     # output = [itinerary]
 
-    return render_template('review_itinerary.html', current_user=current_user, itinerary=itinerary, output=output)
+    return render_template('review_itinerary.html', current_user=current_user, output=output)
 
 
 @app.route('/edit/itinerary/<int:post_id>')

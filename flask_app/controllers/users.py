@@ -1,6 +1,6 @@
 from flask_app import app
 from flask import render_template,redirect,request,session, flash
-from flask_app.models import user, itinerary
+from flask_app.models import user, itinerary, tour_guide
 # from flask_app.models.guide import TV_Show
 from flask_bcrypt import Bcrypt        
 bcrypt = Bcrypt(app)
@@ -54,11 +54,11 @@ def dashboard():
     # when refernced we do the dashboard function
     if 'user_id' in session: 
         print('in session')
+    
         # if user_id is not in session, logged out...
         return render_template('dashboard.html', 
                             #    return dahsbaord.html
-                        current_user = user.User.getById({'id': session['user_id']}), output = itinerary.Itinerary.get_all())
-    return redirect('/')
+                        current_user = user.User.getById({'id': session['user_id']}), output = itinerary.Itinerary.get_all(), tgui = tour_guide.Tour.get_all_guides())
 
 #Route validates login user
 # @app.route('/do_tour_login', methods=['POST'])

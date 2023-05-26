@@ -37,7 +37,7 @@ class Tour:
     @classmethod
     def get_itnerary_with_tour(cls,data):
         query = """
-                SELECT * FROM guides JOIN itineraries ON itineraries.guide_id = guides.id WHERE guides.city = %(city)s;
+                SELECT * FROM guides LEFT JOIN itineraries ON guides.city = itineraries.city WHERE guides.city = %(city)s;
                 """
         result = connectToMySQL(cls.mydb).query_db(query,data)
 
@@ -46,13 +46,13 @@ class Tour:
 
         guide_result = cls(result[0])
         descr_data = {
-                "id": result[0]['id'],
-                "first_name": result[0]['first_name'],
-                "last_name": result[0]['last_name'],
-                "city": result[0]['city'],
+                "id": result[0]['itineraries.id'],
+                "first_name": result[0]['itineraries.first_name'],
+                "last_name": result[0]['itineraries.last_name'],
+                "city": result[0]['itineraries.city'],
                 "trip_details": result[0]['trip_details'],
-                "created_at": result[0]['created_at'],
-                "updated_at": result[0]['updated_at'],
+                "created_at": result[0]['itineraries.created_at'],
+                "updated_at": result[0]['itineraries.updated_at'],
                 "user_id": result[0]['user_id'],
                 "guide_id": result[0]['guide_id']
             }

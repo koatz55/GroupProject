@@ -3,29 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
 </head>
-<body>
-    <div>
-            <h1>Itinerary</h1>
+<body background="{{ url_for('static', filename='./round2.jpg') }}">
+    <div class="d-flex justify-content-center">
+        <h1>{{current_user.first_name}} {{current_user.last_name}} Itinerary</h1>
+            <table class="table w-25 table-warning table-striped table-hover table-sm fs-4 text-center" action="/recipes" method="post" style="margin-top: 10%; margin-left: -10%;"> 
+                <thead>
+                    <tr>
+                        <th class="border border-dark-subtle">Your Past Itinerary</th>
+                </thead>
+                <tbody>
+                    {% for i in output %} 
+                    <tr>
+                        <td class="border border-dark-subtle"><a href="/review/itinerary/{{i.id}}" class="btn btn-success">Your Itinerary: {{i.city}}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
         <div>
             <div>
                 <div>
                     <a href="/create", method = 'post'>Create Your Itinerary</a> 
                 </div>
-                {% for i in output %} 
+                
                 <div>
-                    <a href="/review/itinerary/{{i.id}}">Review Your Itinerary</a> 
+                    <a href="/guide/{{city}}">View Your Guide Match</a> 
                 </div>
-                {% endfor %}
+                
                 <div>
                     <a href="/logout">Logout</a> 
                 </div>
-                <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
+                
+            </div>
+            <div>
+                <a href="/tour_guide">Find Tour Guide</a>
             </div>
         </div>
     </div>
+    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> 
 </body>
 </html>

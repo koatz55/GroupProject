@@ -37,8 +37,7 @@ class Itinerary:
     @classmethod
     def save(cls,data):
         query = '''
-        INSERT INTO itineraries
-        (first_name, last_name, city, trip_details, user_id)
+        INSERT INTO itineraries (first_name, last_name, city, trip_details, user_id)
         VALUES (%(first_name)s, %(first_name)s, %(city)s,%(trip_details)s, %(user_id)s);'''
         results = connectToMySQL(mydb).query_db(query,data) 
         print(f"results: {results}") 
